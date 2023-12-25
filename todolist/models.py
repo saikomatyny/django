@@ -9,4 +9,4 @@ class todolists(models.Model):
         return self.name_of_task
     
     class Meta:
-        verbose_name_plural = 'Список дел'
+        verbose_name_plural, verbose_name = 'Список дел', 'Список дел'
