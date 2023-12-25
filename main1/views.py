@@ -24,4 +24,8 @@ def post_endpoint(request):
 
 
 def index(request):
-    return render(request, 'main1/index.html', {'title': '123123'})
+    data = {
+        'ttile': 'example #1'
+
+    }
+    return render(request, 'main1/index.html', data)
