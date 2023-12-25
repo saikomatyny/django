@@ -5,9 +5,13 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import todolists
 
 def get_endpoint(request):
-    #data = {f"{todolists.name_of_task}": f"{todolists.done_or_not}"}
-    data = todolists.__str__(self=todolists)
-    return JsonResponse(data)
+    todolist_objects = todolists.objects.all()
+    todolist_values_dict = {}
+
+    for obj in todolist_objects:
+        todolist_values_dict[obj.name_of_task] = obj.done_or_not
+
+    return JsonResponse(todolist_values_dict)
 
 @csrf_exempt
 def post_endpoint(request):
