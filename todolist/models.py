@@ -6,7 +6,7 @@ class todolists(models.Model):
 
 
     def __str__(self):
-        return self.name_of_task
+        return {self.name_of_task: self.done_or_not}
     
     class Meta:
         verbose_name_plural, verbose_name = 'Список дел', 'Список дел'
