@@ -1,0 +1,12 @@
+{% extends 'main1/layout.html' %}
+
+{% block title %} This is an example {% endblock %}
+
+{% block content %}
+{{ main_text }}
+
+{% for val in list %}
+    <p>{{ val }}</p>
+{% endfor %}
+
+{% endblock %}
