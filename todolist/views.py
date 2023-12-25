@@ -6,13 +6,12 @@ from .models import todolists
 
 def get_endpoint(request):
     todolist_objects = todolists.objects.all()
-    '''todolist_values_dict = {}
+    todolist_values_dict = {}
 
     for obj in todolist_objects:
         todolist_values_dict[obj.name_of_task] = obj.done_or_not
 
-    return JsonResponse(todolist_values_dict)'''
-    return JsonResponse(todolist_objects, safe=False)
+    return JsonResponse(todolist_values_dict)
 
 @csrf_exempt
 def post_endpoint(request):
