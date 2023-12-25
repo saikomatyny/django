@@ -21,6 +21,10 @@ def post_endpoint(request):
     name_of_task = request.GET.get('name_of_task')
     done_or_not = request.GET.get('done_or_not')
 
+    if name_of_task is None or done_or_not is None:
+        error_message = 'Both "name_of_task" and "done_or_not" are required parameters.'
+        return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
+
     try:
         todolist_obj = todolists.objects.create(name_of_task=name_of_task, done_or_not=done_or_not)
         
