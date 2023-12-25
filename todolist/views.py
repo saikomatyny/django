@@ -12,7 +12,9 @@ def get_endpoint(request):
         todolist_values_dict[obj.name_of_task] = obj.done_or_not
 
     return JsonResponse(todolist_values_dict)'''
-    return JsonResponse(todolist_objects)
+    todolist_values_list = list(todolist_objects.values())
+
+    return JsonResponse(todolist_values_list, safe=False)
 
 @csrf_exempt
 def post_endpoint(request):
