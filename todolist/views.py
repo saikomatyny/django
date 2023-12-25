@@ -2,9 +2,10 @@ import json
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from .models import todolists
 
 def get_endpoint(request):
-    data = {'message': 'TEST'}
+    data = {todolists.name_of_task: todolists.done_or_not}
     return JsonResponse(data)
 
 @csrf_exempt
