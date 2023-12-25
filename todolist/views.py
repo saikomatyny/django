@@ -6,7 +6,7 @@ from .models import todolists
 
 def get_endpoint(request):
     #data = {f"{todolists.name_of_task}": f"{todolists.done_or_not}"}
-    data = todolists.__str__()
+    data = todolists.__str__
     return JsonResponse(data)
 
 @csrf_exempt
