@@ -7,3 +7,6 @@ class todolists(models.Model):
 
     def __str__(self):
         return self.name_of_task
+    
+    class Meta:
+        verbose_name = 'Список дел'
