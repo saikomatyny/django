@@ -38,7 +38,7 @@ def post_endpoint(request):
         error_message = f'Missing key in data: {str(e)}'
         return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
 
-
+@require_http_methods(["DELETE"])
 def delete_endpoint(request):
     data = request.data
 
