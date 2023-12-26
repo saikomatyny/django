@@ -41,7 +41,7 @@ def postToDoList(request):
 @api_view(['POST'])
 def deleteToDoList(request):
     data = request.data
-
+    return JsonResponse(todolists.objects.get(name_of_task=name))
     try:
         if type(data) == list:
             for name in data:
