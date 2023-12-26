@@ -28,7 +28,7 @@ def postToDoList(request):
         else:
             if todolists.objects.filter(name_of_task=data['name_of_task']).exists():
                 duplicate = data['name_of_task']
-                return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': f'List already has "{duplicate}" task'}, status=status.HTTP_400_BAD_REQUEST)
             name_of_task = data['name_of_task']
             done_or_not = data['done_or_not']
 
