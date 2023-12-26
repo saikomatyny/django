@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index),
-    path('getToDoList/', views.get_endpoint),
-    path('postToDoList/', views.post_endpoint),
-    path('deleteToDoList/', views.delete_endpoint),
+    path('getToDoList/', views.getToDoList),
+    path('postToDoList/', views.postToDoList),
+    path('deleteToDoList/', views.deleteToDoList),
 ]
