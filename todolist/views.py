@@ -38,16 +38,17 @@ def postToDoList(request):
         error_message = f'Missing key in data: {str(e)}'
         return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 def deleteToDoList(request):
     data = request.data
-    return JsonResponse(data, safe=False)
+    todolist_objects = todolists.objects.all()
 
     try:
         if type(data) == list:
             for name in data:
                 try:
-                    todolists.objects.get(name_of_task=name).delete()
+                    todolists.objects.delete(name_of_task=todolist_objects[name])
                 except:
                     error_message = f'There is no such task as {name}'
                     return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
