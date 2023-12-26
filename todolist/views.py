@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-def get_endpoint(request):
+def getToDoList(request):
     todolist_objects = todolists.objects.all()
     todolist_values_dict = {}
 
@@ -16,7 +16,7 @@ def get_endpoint(request):
     return JsonResponse(todolist_values_dict)
 
 @api_view(['POST'])
-def post_endpoint(request):
+def postToDoList(request):
     data = request.data
 
     try:
@@ -39,7 +39,7 @@ def post_endpoint(request):
         return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
 
 
-def delete_endpoint(request):
+def deleteToDoList(request):
     return JsonResponse(request, safe=False)
     data = request.data
 
