@@ -51,7 +51,7 @@ def deleteToDoList(request):
                     error_message = f'There is no such task as {name}'
                     return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            todolists.objects.get(name_of_task=name).delete()
+            todolists.objects.delete(name_of_task=name)
         
         return Response('Data has been successfully deleted from server', status=status.HTTP_201_CREATED)
     
