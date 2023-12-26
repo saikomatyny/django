@@ -22,8 +22,8 @@ def postToDoList(request):
     try:
         if type(data) == list:
             for lists in data:
-                if todolists.objects.filter(name_of_task=data['name_of_task']).exists():
-                    duplicate = data['name_of_task']
+                if todolists.objects.filter(name_of_task=lists['name_of_task']).exists():
+                    duplicate = lists['name_of_task']
                     return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
                 name_of_task = lists['name_of_task']
                 done_or_not = lists['done_or_not']
