@@ -41,6 +41,7 @@ def postToDoList(request):
 
 def deleteToDoList(request):
     data = request.GET
+    return JsonResponse(data, safe=False)
 
     try:
         if type(data) == list:
