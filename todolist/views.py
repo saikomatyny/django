@@ -67,8 +67,8 @@ def deleteToDoList(request):
     except KeyError as e:
         error_message = f'Missing name of task in data: {str(e)}'
         return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
-
-
+    except todolists.DoesNotExist:
+        return Response({'error' : f'{data} does not exist in list'})
 
 def index(request):
     data = {
