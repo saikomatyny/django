@@ -38,7 +38,7 @@ def post_endpoint(request):
         error_message = f'Missing key in data: {str(e)}'
         return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
 
-'''
+
 def delete_endpoint(request):
     data = request.data
 
@@ -46,20 +46,20 @@ def delete_endpoint(request):
         if type(data) == list:
             for name in data:
                 try:
-                    todolists.objects.delete(name_of_task=name)
+                    todolists.objects.get(name_of_task=name).delete()
                 except:
                     error_message = f'There is no such task as {name}'
                     return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            todolists.objects.delete(name_of_task=data)
+            todolists.objects.get(name_of_task=name).delete()
         
         return Response('Data has been successfully deleted from server', status=status.HTTP_201_CREATED)
     
     except KeyError as e:
         error_message = f'Missing name of task in data: {str(e)}'
         return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
-'''
 
+'''
 def delete_endpoint(request):
     try:
         data = request.POST.getlist('name_of_task')
@@ -84,7 +84,7 @@ def delete_endpoint(request):
     except KeyError as e:
         error_message = f'Missing name_of_task in data: {str(e)}'
         return JsonResponse({'error': error_message}, status=400)
-
+'''
 
 def index(request):
     data = {
