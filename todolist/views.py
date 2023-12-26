@@ -18,6 +18,9 @@ def getToDoList(request):
 @api_view(['POST'])
 def postToDoList(request):
     data = request.data
+    if data['name_of_task'] in todolists.objects.keys():
+        duplicate = data['name_of_task']
+        return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
         if type(data) == list:
