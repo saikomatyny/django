@@ -44,7 +44,10 @@ def delete_endpoint(request):
     try:
         if type(data) == list:
             for name in data:
-                todolists.objects.delete(name_of_task=name)
+                try:
+                    todolists.objects.delete(name_of_task=name)
+                except:
+                    error_message = f'There is no such task as {name}'
         else:
             todolists.objects.delete(name_of_task=data)
         
