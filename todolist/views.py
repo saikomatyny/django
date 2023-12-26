@@ -40,6 +40,7 @@ def post_endpoint(request):
 
 
 def delete_endpoint(request):
+    return Response(request)
     data = request.data
 
     try:
