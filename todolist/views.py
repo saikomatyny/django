@@ -45,6 +45,8 @@ def delete_endpoint(request):
         if type(data) == list:
             for name in data:
                 todolists.objects.delete(name_of_task=name)
+        else:
+            todolists.objects.delete(name_of_task=data)
     except KeyError as e:
         error_message = f'Missing name of task in data: {str(e)}'
         return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
