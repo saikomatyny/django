@@ -18,8 +18,7 @@ def getToDoList(request):
 @api_view(['POST'])
 def postToDoList(request):
     data = request.data
-    return HttpResponse(todolists.objects.all())
-    if data['name_of_task'] in todolists.objects.keys():
+    if data['name_of_task'] in todolists.objects.all().keys():
         duplicate = data['name_of_task']
         return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
 
