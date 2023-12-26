@@ -40,7 +40,7 @@ def postToDoList(request):
 
 
 def deleteToDoList(request):
-    data = request.data
+    data = request.GET
 
     try:
         if type(data) == list:
