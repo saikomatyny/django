@@ -21,18 +21,24 @@ def post_endpoint(request):
     data = request.data
 
     try:
-        name_of_task = data['name_of_task']
-        done_or_not = data['done_or_not']
+        if type(data) == list:
+            for lists in data:
+                name_of_task = lists['name_of_task']
+                done_or_not = lists['done_or_not']
+                todolists.objects.create(name_of_task=name_of_task, done_or_not=done_or_not)
+        else:
+            name_of_task = data['name_of_task']
+            done_or_not = data['done_or_not']
 
-        todolist_obj = todolists.objects.create(name_of_task=name_of_task, done_or_not=done_or_not)
+            todolist_obj = todolists.objects.create(name_of_task=name_of_task, done_or_not=done_or_not)
         
-        response_data = {
-            'id': todolist_obj.id,
-            'name_of_task': todolist_obj.name_of_task,
-            'done_or_not': todolist_obj.done_or_not,
-        }
+            response_data = {
+                'id': todolist_obj.id,
+                'name_of_task': todolist_obj.name_of_task,
+                'done_or_not': todolist_obj.done_or_not,
+            }
 
-        return Response(response_data, status=status.HTTP_201_CREATED)
+        return Response('Your data has been successfully added to server', status=status.HTTP_201_CREATED)
 
     except KeyError as e:
         error_message = f'Missing key in data: {str(e)}'
