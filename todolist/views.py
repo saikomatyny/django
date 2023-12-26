@@ -38,6 +38,16 @@ def post_endpoint(request):
         error_message = f'Missing key in data: {str(e)}'
         return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
 
+def delete_endpoint(request):
+    data = request.data
+
+    try:
+        if type(data) == list:
+            for name in data:
+                todolists.objects.delete(name)
+    except KeyError as e:
+        error_message = f'Missing name of task in data: {str(e)}'
+        return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
 
 def index(request):
     data = {
