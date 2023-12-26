@@ -43,18 +43,16 @@ def deleteToDoList(request):
     data = request.data
 
     try:
-        if isinstance(data, list):
+        if type(data) == list:
             for name in data:
                 try:
-                    todolist = todolists.objects.get(name_of_task=name)
-                    todolist.delete()
+                    todolists.objects.get(name_of_task=name).delete()
                 except todolists.DoesNotExist:
                     error_message = f'There is no such task as {name}'
                     return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
         else:
             try:
-                todolist = todolists.objects.get(name_of_task=data)
-                todolist.delete()
+                todolists.objects.get(name_of_task=data).delete()
             except todolists.DoesNotExist:
                 error_message = f'There is no such task as {data}'
                 return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
