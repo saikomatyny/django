@@ -40,7 +40,7 @@ def postToDoList(request):
 
 
 def deleteToDoList(request):
-    data = request.GET.data
+    data = request.data
     return JsonResponse(data, safe=False)
 
     try:
