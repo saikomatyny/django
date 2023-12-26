@@ -32,11 +32,6 @@ def post_endpoint(request):
 
             todolist_obj = todolists.objects.create(name_of_task=name_of_task, done_or_not=done_or_not)
         
-            response_data = {
-                'id': todolist_obj.id,
-                'name_of_task': todolist_obj.name_of_task,
-                'done_or_not': todolist_obj.done_or_not,
-            }
 
         return Response('Your data has been successfully added to server', status=status.HTTP_201_CREATED)
 
