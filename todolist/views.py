@@ -40,7 +40,7 @@ def post_endpoint(request):
 
 
 def delete_endpoint(request):
-    return JsonResponse(request)
+    return JsonResponse(request, safe=False)
     data = request.data
 
     try:
