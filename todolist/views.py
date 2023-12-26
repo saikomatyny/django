@@ -49,6 +49,7 @@ def delete_endpoint(request):
             todolists.objects.delete(name_of_task=data)
         
         return Response('Data has been successfully deleted from server', status=status.HTTP_201_CREATED)
+    
     except KeyError as e:
         error_message = f'Missing name of task in data: {str(e)}'
         return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
