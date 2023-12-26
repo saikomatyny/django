@@ -59,32 +59,7 @@ def delete_endpoint(request):
         error_message = f'Missing name of task in data: {str(e)}'
         return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
 
-'''
-def delete_endpoint(request):
-    try:
-        data = request.POST.getlist('name_of_task')
-        if not data:
-            raise KeyError("name_of_task")
 
-        if isinstance(data, list):
-            for name in data:
-                try:
-                    todolists.objects.get(name_of_task=name).delete()
-                except todolists.DoesNotExist:
-                    error_message = f'There is no such task as {name}'
-                    return JsonResponse({'error': error_message}, status=400)
-        else:
-            try:
-                todolists.objects.get(name_of_task=data).delete()
-            except todolists.DoesNotExist:
-                error_message = f'There is no such task as {data}'
-                return JsonResponse({'error': error_message}, status=400)
-
-        return JsonResponse({'message': 'Data has been successfully deleted from the server'}, status=200)
-    except KeyError as e:
-        error_message = f'Missing name_of_task in data: {str(e)}'
-        return JsonResponse({'error': error_message}, status=400)
-'''
 
 def index(request):
     data = {
