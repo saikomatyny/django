@@ -48,6 +48,7 @@ def delete_endpoint(request):
                     todolists.objects.delete(name_of_task=name)
                 except:
                     error_message = f'There is no such task as {name}'
+                    return Response({'error': error_message}, status=status.HTTP_400_BAD_REQUEST)
         else:
             todolists.objects.delete(name_of_task=data)
         
