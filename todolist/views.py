@@ -70,6 +70,7 @@ def deleteToDoList(request):
     except todolists.DoesNotExist:
         return Response({'error' : f'{data} does not exist in list'})
 
+
 def index(request):
     data = {
         'title': 'example #1',
