@@ -6,4 +6,5 @@ urlpatterns = [
     path('getToDoList/', views.getToDoList),
     path('postToDoList/', views.postToDoList),
     path('deleteToDoList/', views.deleteToDoList),
+    path('test/', views.test),
 ]
