@@ -53,8 +53,15 @@ def postToDoList(request):
                     todolist.objects.create(name_of_task=name_of_task, done_or_not=done_or_not)
                 else:
                     if nameOfList.objects.filter(name_of_list=task['name_of_list']).exists():
-                        duplicate = task['name_of_list']
-                        return Response({'error': f'There is already {duplicate} list'}, status=status.HTTP_400_BAD_REQUEST)
+                        existing_list = nameOfList.objects.get(name_of_list=task['name_of_list'])
+                        for lists in task['list_of_todo']:
+                            if todolist.objects.filter(name_of_task=lists['name_of_task']).exists():
+                                duplicate = lists['name_of_task']
+                                return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
+                            temp = todolist.objects.create(name_of_task=lists['name_of_task'], done_or_not=lists['done_or_not'])
+                            existing_list.tasks.add(temp)
+
+                        return Response('Your data has been successfully added to server', status=status.HTTP_201_CREATED)
                     
                     new_list = nameOfList.objects.create(name_of_list=task['name_of_list'])
                     
