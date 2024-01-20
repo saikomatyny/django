@@ -13,8 +13,9 @@ class todolist(models.Model):
 
     name_of_task = models.CharField('Что нужно сделать: ', max_length=100)
     done_or_not = models.BooleanField('Сделано или нет: ')
+    date_field = models.DateTimeField(null=True, blank=True)
 
-    lists_of_todolist = models.ManyToManyField(nameOfList, related_name='tasks')
+    lists_of_todolist = models.ManyToManyField(nameOfList, related_name='tasks', blank=True)
 
 
     def __str__(self):
