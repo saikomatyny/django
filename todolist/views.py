@@ -45,20 +45,23 @@ Example for post endpoint
 [
   {"name_of_list": "list1", "list_of_todo": [{"name_of_task": "Task1", "date" : "now"}]},
   {"name_of_list": "list2", "list_of_todo": [{"name_of_task": "Task2", "date" : "now"}]},
-  {"name_of_task": "Task3", "date": "2022-01-17T12:30:00"}
+  {"name_of_task": "Task3", "date": "2022-01-17T12:30:00"},
+  {"name_of_task": "Task4"} #in this case {{date_field}} will equal current UTC date and time
 ]
 '''
 
-def dateParse(lst):
-    temp_arr = lst['date'].split('T')
-    res_date = [temp_arr[0].split('-')]
-    res_date += [temp_arr[1].split(':')]
-    return res_date
+
 
 
 @api_view(['POST'])
 def postToDoList(request):
     data = request.data
+
+    def dateParse(lst):
+        temp_arr = lst['date'].split('T')
+        res_date = [temp_arr[0].split('-')]
+        res_date += [temp_arr[1].split(':')]
+        return res_date
     #test_str = ''
     try:
         if type(data) == list:
@@ -71,7 +74,7 @@ def postToDoList(request):
                         #test_str += '2'
                         return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
                     
-                    if task['date'].lower() == 'now':
+                    if 'date' not in task or task['date'].lower() == 'now':
                         new_task = todolist.objects.create(name_of_task=task['name_of_task'], done_or_not=False, date_field = datetime.now())
                     else:
                         res_date = dateParse(task)
@@ -85,7 +88,7 @@ def postToDoList(request):
                                 duplicate = lists['name_of_task']
                                 #test_str += '4'
                                 return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
-                            if lists['date'].lower() == 'now':
+                            if 'date' not in lists or lists['date'].lower() == 'now':
                                 new_task = todolist.objects.create(name_of_task=lists['name_of_task'], done_or_not=False, date_field = datetime.now())
                             else:
                                 res_date = dateParse(lists)
@@ -99,7 +102,7 @@ def postToDoList(request):
                                     #test_str += '6'
                                     duplicate = lists['name_of_task']
                                     return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
-                            if lists['date'].lower() == 'now':
+                            if 'date' not in lists or lists['date'].lower() == 'now':
                                 new_task = todolist.objects.create(name_of_task=lists['name_of_task'], done_or_not=False, date_field = datetime.now())
                             else:
                                 res_date = dateParse(lists)
@@ -112,7 +115,7 @@ def postToDoList(request):
                 duplicate = data['name_of_task']
                 return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
             
-            if data['date'].lower() == 'now':
+            if 'date' not in data or data['date'].lower() == 'now':
                 new_task = todolist.objects.create(name_of_task=data['name_of_task'], done_or_not=False, date_field = datetime.now())
             else:
                 res_date = dateParse(data)
