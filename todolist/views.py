@@ -43,9 +43,9 @@ def getToDoList(request):
 '''
 Example for post endpoint
 [
-  {"name_of_list": "list1", "list_of_todo": [{"name_of_task": "Task1", "done_or_not": false, "date" : "now"}]},
-  {"name_of_list": "list2", "list_of_todo": [{"name_of_task": "Task2", "done_or_not": true, "date" : "now"}]},
-  {"name_of_task": "Task3", "done_or_not": true, "date": "2022-01-17T12:30:00"}
+  {"name_of_list": "list1", "list_of_todo": [{"name_of_task": "Task1", "date" : "now"}]},
+  {"name_of_list": "list2", "list_of_todo": [{"name_of_task": "Task2", "date" : "now"}]},
+  {"name_of_task": "Task3", "date": "2022-01-17T12:30:00"}
 ]
 '''
 
@@ -59,70 +59,64 @@ def dateParse(lst):
 @api_view(['POST'])
 def postToDoList(request):
     data = request.data
-    test_str = ''
+    #test_str = ''
     try:
         if type(data) == list:
             for task in data:
                 
                 if 'name_of_task' in task:
-                    test_str += '1'
+                    #test_str += '1'
                     if todolist.objects.filter(name_of_task=task['name_of_task']).exists():
                         duplicate = task['name_of_task']
-                        test_str += '2'
+                        #test_str += '2'
                         return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
                     
-                    name_of_task = task['name_of_task']
-                    done_or_not = task['done_or_not']
                     if task['date'].lower() == 'now':
-                        new_task = todolist.objects.create(name_of_task=task['name_of_task'], done_or_not=task['done_or_not'], date_field = datetime.now())
+                        new_task = todolist.objects.create(name_of_task=task['name_of_task'], done_or_not=False, date_field = datetime.now())
                     else:
                         res_date = dateParse(task)
-                        new_task = todolist.objects.create(name_of_task=name_of_task, done_or_not=done_or_not, date_field = datetime(int(res_date[0][0]), int(res_date[0][1]), int(res_date[0][2]), int(res_date[1][0]), int(res_date[1][1]), int(res_date[1][2])))
+                        new_task = todolist.objects.create(name_of_task=task['name_of_task'], done_or_not=False, date_field = datetime(int(res_date[0][0]), int(res_date[0][1]), int(res_date[0][2]), int(res_date[1][0]), int(res_date[1][1]), int(res_date[1][2])))
                 else:
-                    test_str += '3'
+                    #test_str += '3'
                     if nameOfList.objects.filter(name_of_list=task['name_of_list']).exists():
                         existing_list = nameOfList.objects.get(name_of_list=task['name_of_list'])
                         for lists in task['list_of_todo']:
                             if todolist.objects.filter(name_of_task=lists['name_of_task']).exists():
                                 duplicate = lists['name_of_task']
-                                test_str += '4'
-                                return Response({'error': f'List already has {duplicate} task, {test_str}'}, status=status.HTTP_400_BAD_REQUEST)
+                                #test_str += '4'
+                                return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
                             if lists['date'].lower() == 'now':
-                                new_task = todolist.objects.create(name_of_task=lists['name_of_task'], done_or_not=lists['done_or_not'], date_field = datetime.now())
+                                new_task = todolist.objects.create(name_of_task=lists['name_of_task'], done_or_not=False, date_field = datetime.now())
                             else:
-                                temp_date = lists['date'].split('T')
-                                res_date = [temp_date[0].split('-')]
-                                res_date += [temp_date[1].split(':')]
-                                new_task = todolist.objects.create(name_of_task=lists['name_of_task'], done_or_not=lists['done_or_not'], date_field = datetime(int(res_date[0][0]), int(res_date[0][1]), int(res_date[0][2]), int(res_date[1][0]), int(res_date[1][1]), int(res_date[1][2])))
+                                res_date = dateParse(lists)
+                                new_task = todolist.objects.create(name_of_task=lists['name_of_task'], done_or_not=False, date_field = datetime(int(res_date[0][0]), int(res_date[0][1]), int(res_date[0][2]), int(res_date[1][0]), int(res_date[1][1]), int(res_date[1][2])))
                             existing_list.tasks.add(new_task)
                     else:
                         new_list = nameOfList.objects.create(name_of_list=task['name_of_list'])
-                        test_str += '5'
+                        #test_str += '5'
                         for lists in task['list_of_todo']:
                             if todolist.objects.filter(name_of_task=lists['name_of_task']).exists():
-                                    test_str += '6'
+                                    #test_str += '6'
                                     duplicate = lists['name_of_task']
-                                    return Response({'error': f'List already has {duplicate} task, {test_str}'}, status=status.HTTP_400_BAD_REQUEST)
+                                    return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
                             if lists['date'].lower() == 'now':
-                                new_task = todolist.objects.create(name_of_task=lists['name_of_task'], done_or_not=lists['done_or_not'], date_field = datetime.now())
+                                new_task = todolist.objects.create(name_of_task=lists['name_of_task'], done_or_not=False, date_field = datetime.now())
                             else:
                                 res_date = dateParse(lists)
-                                new_task = todolist.objects.create(name_of_task=lists['name_of_task'], done_or_not=lists['done_or_not'], date_field = datetime(int(res_date[0][0]), int(res_date[0][1]), int(res_date[0][2]), int(res_date[1][0]), int(res_date[1][1]), int(res_date[1][2])))
+                                new_task = todolist.objects.create(name_of_task=lists['name_of_task'], done_or_not=False, date_field = datetime(int(res_date[0][0]), int(res_date[0][1]), int(res_date[0][2]), int(res_date[1][0]), int(res_date[1][1]), int(res_date[1][2])))
                             
                             new_task.lists_of_todolist.add(new_list)
         else:
             if todolist.objects.filter(name_of_task=data['name_of_task']).exists():
-                test_str += '7'
+                #test_str += '7'
                 duplicate = data['name_of_task']
-                return Response({'error': f'List already has {duplicate} task, {test_str}'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': f'List already has {duplicate} task'}, status=status.HTTP_400_BAD_REQUEST)
             
-            name_of_task = data['name_of_task']
-            done_or_not = data['done_or_not']
             if data['date'].lower() == 'now':
-                new_task = todolist.objects.create(name_of_task=data['name_of_task'], done_or_not=data['done_or_not'], date_field = datetime.now())
+                new_task = todolist.objects.create(name_of_task=data['name_of_task'], done_or_not=False, date_field = datetime.now())
             else:
                 res_date = dateParse(data)
-                new_task = todolist.objects.create(name_of_task=name_of_task, done_or_not=done_or_not, date_field = datetime(int(res_date[0][0]), int(res_date[0][1]), int(res_date[0][2]), int(res_date[1][0]), int(res_date[1][1]), int(res_date[1][2])))
+                new_task = todolist.objects.create(name_of_task=data['name_of_task'], done_or_not=False, date_field = datetime(int(res_date[0][0]), int(res_date[0][1]), int(res_date[0][2]), int(res_date[1][0]), int(res_date[1][1]), int(res_date[1][2])))
         
 
         return Response('Your data has been successfully added to server', status=status.HTTP_201_CREATED)
